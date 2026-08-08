@@ -154,9 +154,9 @@ export const categories: Category[] = [
         name: 'Snack Thon Mayo',
         format: '10 pièces',
         price: '9,50 €',
-        image: '/images/produits/snack-thon-mayonnaise.jpg',
+        image: '/images/produits/snack-thon-mayonnaise-10.jpg',
         composition:
-          '2 uramaki thon cuit mayonnaise, 4 maki thon cuit mayonnaise, 4 oignons frits, 4 maki thon cuit épicés srirachi mayonnaise.',
+          '2 rice sandwich thon cuit mayonnaise, 4 california thon, 4 california thon épicé, oignons frits, épices shichimi & sauce sriracha mayonnaise.',
       },
       {
         name: 'Snack Saumon',
