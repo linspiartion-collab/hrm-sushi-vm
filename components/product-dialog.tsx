@@ -47,7 +47,7 @@ export function ProductDialog({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-lg overflow-hidden rounded-t-2xl bg-paper sm:rounded-sm"
+        className="relative w-full max-w-2xl overflow-hidden rounded-t-2xl bg-paper sm:rounded-sm"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -64,12 +64,14 @@ export function ProductDialog({
             src={image || '/placeholder.svg'}
             alt={imageAlt}
             fill
-            sizes="(min-width: 640px) 512px, 100vw"
+            sizes="(min-width: 640px) 700px, 100vw"
+            quality={95}
+            priority
             className="object-cover"
           />
         </div>
 
-        <div className="max-h-[45vh] overflow-y-auto px-6 py-6 sm:max-h-none">
+        <div className="max-h-[45vh] overflow-y-auto px-6 py-6 sm:max-h-none sm:px-8 sm:py-8">
           {product.format ? (
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
               {product.format}
@@ -78,18 +80,18 @@ export function ProductDialog({
 
           <h3
             id="product-dialog-title"
-            className="mt-1 font-serif text-xl font-black uppercase tracking-tight text-ink sm:text-2xl"
+            className="mt-1 font-serif text-2xl font-black uppercase tracking-tight text-ink sm:text-3xl"
           >
             {product.name}
           </h3>
 
           {product.composition ? (
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
               {product.composition}
             </p>
           ) : null}
 
-          <p className="mt-6 font-mono text-lg font-semibold tabular-nums text-brand">
+          <p className="mt-6 font-mono text-lg font-semibold tabular-nums text-brand sm:text-xl">
             {product.price}
           </p>
         </div>
