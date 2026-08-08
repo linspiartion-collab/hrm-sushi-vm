@@ -1,7 +1,13 @@
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
-import type { Category } from '@/lib/menu'
+import type { Category, Product } from '@/lib/menu'
+import { ProductDialog } from '@/components/product-dialog'
 
 export function MenuSection({ category }: { category: Category }) {
+  const [selected, setSelected] = useState<Product | null>(null)
+
   return (
     <section
       id={category.id}
@@ -33,28 +39,38 @@ export function MenuSection({ category }: { category: Category }) {
 
           <ul className="mt-6 divide-y divide-ink/10 border-t border-ink/10">
             {category.products.map((product) => (
-              <li
-                key={`${product.name}-${product.format ?? ''}`}
-                className="flex items-baseline justify-between gap-4 py-3.5"
-              >
-                <div className="min-w-0">
-                  <p className="font-serif text-sm font-bold uppercase leading-snug tracking-wide text-ink sm:text-base">
-                    {product.name}
-                  </p>
-                  {product.format ? (
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {product.format}
+              <li key={`${product.name}-${product.format ?? ''}`}>
+                <button
+                  type="button"
+                  onClick={() => setSelected(product)}
+                  className="flex w-full items-baseline justify-between gap-4 py-3.5 text-left transition hover:bg-ink/[0.03]"
+                >
+                  <div className="min-w-0">
+                    <p className="font-serif text-sm font-bold uppercase leading-snug tracking-wide text-ink sm:text-base">
+                      {product.name}
                     </p>
-                  ) : null}
-                </div>
-                <p className="shrink-0 font-mono text-sm font-semibold tabular-nums text-brand sm:text-base">
-                  {product.price}
-                </p>
+                    {product.format ? (
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        {product.format}
+                      </p>
+                    ) : null}
+                  </div>
+                  <p className="shrink-0 font-mono text-sm font-semibold tabular-nums text-brand sm:text-base">
+                    {product.price}
+                  </p>
+                </button>
               </li>
             ))}
           </ul>
         </div>
       </div>
+
+      <ProductDialog
+        product={selected}
+        fallbackImage={category.image}
+        fallbackImageAlt={category.imageAlt}
+        onClose={() => setSelected(null)}
+      />
     </section>
   )
 }

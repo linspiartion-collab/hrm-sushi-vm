@@ -3,6 +3,16 @@ export type Product = {
   /** Format / nombre de pièces, optionnel */
   format?: string
   price: string
+  /**
+   * Photo dédiée au produit (fiche cliquable).
+   * Déposez votre fichier dans `public/images/produits/` et indiquez le chemin ici.
+   * Si absent, la photo de la catégorie est utilisée à la place.
+   */
+  image?: string
+  /**
+   * Composition / liste des ingrédients affichée dans la fiche produit.
+   */
+  composition?: string
 }
 
 export type Category = {
