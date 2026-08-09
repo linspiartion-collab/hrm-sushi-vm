@@ -3,21 +3,14 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { brand } from '@/lib/brand'
 import { categories } from '@/lib/menu'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-  // Évite que ScrollTrigger recalcule tout quand la barre d'adresse du
-  // navigateur mobile apparaît/disparaît en scrollant (cause principale
-  // de saccades sur iOS Safari et Chrome Android).
-  ScrollTrigger.config({ ignoreMobileResize: true })
-}
 
 export function Hero() {
   const firstCategory = categories[0]
   const sectionRef = useRef<HTMLElement>(null)
+  const bgRef = useRef<HTMLDivElement>(null)
+  const stripesRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLImageElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
@@ -28,28 +21,28 @@ export function Hero() {
       '(prefers-reduced-motion: reduce)',
     ).matches
     // Si l'utilisateur préfère moins de mouvement, on laisse le hero statique
-    // (le logo garde sa taille normale, le reste du contenu reste visible).
+    // (tout le contenu reste visible immédiatement, sans mouvement).
     if (prefersReducedMotion) return
 
+    // Animation d'entrée jouée une seule fois au chargement de la page — plus
+    // de scroll requis pour voir apparaître le titre/CTA. Séquence : le fond
+    // s'éclaircit, les rayures se déploient depuis la gauche (signature de
+    // marque), le logo se pose, puis le texte et le bouton arrivent en cascade.
     const ctx = gsap.context(() => {
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: '+=100%',
-          scrub: 0.6,
-        },
-      })
+      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
-      // Le logo rétrécit et remonte pendant que le reste du contenu apparaît,
-      // le tout parfaitement synchronisé avec la position de scroll.
+      // Chaque élément part de l'état posé par sa classe `*-in` en CSS ;
+      // GSAP l'anime vers son état final (opacity/transform à 0/none).
       timeline
-        .to(logoRef.current, { scale: 0.7, y: -130, ease: 'none' }, 0)
-        .fromTo(
-          [titleRef.current, subtitleRef.current, ctaRef.current],
-          { opacity: 0, y: 24 },
-          { opacity: 1, y: 0, stagger: 0.15, ease: 'none' },
-          0.2,
+        .to(bgRef.current, { opacity: 1, duration: 0.7, ease: 'power1.out' }, 0)
+        .to(stripesRef.current, { scaleX: 1, duration: 0.9, ease: 'power3.out' }, 0.05)
+        .to(logoRef.current, { opacity: 1, scale: 1, y: 0, duration: 0.9 }, 0.15)
+        .to(titleRef.current, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.55)
+        .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.68)
+        .to(
+          ctaRef.current,
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'back.out(1.6)' },
+          0.82,
         )
     }, sectionRef)
 
@@ -60,9 +53,9 @@ export function Hero() {
     <header
       id="top"
       ref={sectionRef}
-      className="hero-scroll-wrap relative bg-ink text-cream"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-ink px-6 py-16 text-cream"
     >
-      <div className="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-16">
+      <div ref={bgRef} className="hero-bg-in pointer-events-none absolute inset-0">
         {/* Image de fond sur mobile (économise batterie/données, plus fiable que la vidéo sur téléphone) */}
         <Image
           src={brand.heroImage || '/placeholder.svg'}
@@ -70,7 +63,7 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="pointer-events-none absolute inset-0 object-cover opacity-25 md:hidden"
+          className="object-cover opacity-25 md:hidden"
         />
         {/* Vidéo de fond sur desktop/tablette uniquement (remplaçable via lib/brand.ts) */}
         <video
@@ -80,56 +73,57 @@ export function Hero() {
           playsInline
           preload="auto"
           poster={brand.heroImage}
-          className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover opacity-25 md:block"
+          className="absolute inset-0 hidden h-full w-full object-cover opacity-25 md:block"
         >
           <source src={brand.heroVideo} type="video/mp4" />
         </video>
-        {/* Motif de fines bandes verticales rouges */}
-        <div
-          aria-hidden="true"
-          className="hero-stripes pointer-events-none absolute inset-0 opacity-60"
+      </div>
+      {/* Motif de fines bandes verticales rouges — se déploie depuis la gauche à l'arrivée */}
+      <div
+        ref={stripesRef}
+        aria-hidden="true"
+        className="hero-stripes hero-stripes-in pointer-events-none absolute inset-0 opacity-60"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/60 to-ink"
+      />
+
+      <div className="relative z-10 flex w-full max-w-3xl flex-col items-center gap-8 text-center">
+        <Image
+          ref={logoRef}
+          src={brand.logoLight || '/placeholder.svg'}
+          alt={brand.logoAlt}
+          width={627}
+          height={924}
+          priority
+          className="hero-logo-in h-52 w-auto will-change-transform sm:h-72"
         />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/60 to-ink"
-        />
 
-        <div className="relative z-10 flex w-full max-w-3xl flex-col items-center gap-8 text-center">
-          <Image
-            ref={logoRef}
-            src={brand.logoLight || '/placeholder.svg'}
-            alt={brand.logoAlt}
-            width={627}
-            height={924}
-            priority
-            className="h-52 w-auto will-change-transform sm:h-72"
-          />
+        <h1
+          ref={titleRef}
+          className="hero-reveal-target font-serif text-3xl font-black uppercase leading-tight tracking-tight text-balance sm:text-4xl md:text-5xl"
+        >
+          Vos sushis préférés,{' '}
+          <span className="text-brand">préparés chaque jour</span> dans votre
+          corner Auchan
+        </h1>
 
-          <h1
-            ref={titleRef}
-            className="hero-reveal-target font-serif text-3xl font-black uppercase leading-tight tracking-tight text-balance sm:text-4xl md:text-5xl"
-          >
-            Vos sushis préférés,{' '}
-            <span className="text-brand">préparés chaque jour</span> dans
-            votre corner Auchan
-          </h1>
+        <p
+          ref={subtitleRef}
+          className="hero-reveal-target max-w-xl text-pretty text-base leading-relaxed text-cream/75 sm:text-lg"
+        >
+          Recettes fraîches, préparées sur place par nos chefs sushimen — à
+          emporter en un instant.
+        </p>
 
-          <p
-            ref={subtitleRef}
-            className="hero-reveal-target max-w-xl text-pretty text-base leading-relaxed text-cream/75 sm:text-lg"
-          >
-            Recettes fraîches, préparées sur place par nos chefs sushimen — à
-            emporter en un instant.
-          </p>
-
-          <a
-            ref={ctaRef}
-            href={`#${firstCategory.id}`}
-            className="hero-reveal-target rounded-full bg-brand px-8 py-4 text-sm font-semibold uppercase tracking-widest text-cream transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
-          >
-            Voir la carte
-          </a>
-        </div>
+        <a
+          ref={ctaRef}
+          href={`#${firstCategory.id}`}
+          className="hero-cta-in rounded-full bg-brand px-8 py-4 text-sm font-semibold uppercase tracking-widest text-cream transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
+        >
+          Voir la carte
+        </a>
       </div>
     </header>
   )
