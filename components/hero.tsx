@@ -44,7 +44,7 @@ export function Hero() {
       // Le logo rétrécit et remonte pendant que le reste du contenu apparaît,
       // le tout parfaitement synchronisé avec la position de scroll.
       timeline
-        .to(logoRef.current, { scale: 0.55, y: -160, ease: 'none' }, 0)
+        .to(logoRef.current, { scale: 0.7, y: -130, ease: 'none' }, 0)
         .fromTo(
           [titleRef.current, subtitleRef.current, ctaRef.current],
           { opacity: 0, y: 24 },
@@ -102,7 +102,7 @@ export function Hero() {
             width={627}
             height={924}
             priority
-            className="h-40 w-auto will-change-transform sm:h-52"
+            className="h-52 w-auto will-change-transform sm:h-72"
           />
 
           <h1
