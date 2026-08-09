@@ -27,6 +27,12 @@ export type Category = {
    */
   image: string
   imageAlt: string
+  /**
+   * Vidéo de la catégorie (optionnelle), jouée en boucle sur desktop
+   * uniquement, et seulement quand la section est visible à l'écran.
+   * Déposez le fichier dans `public/videos/categories/`.
+   */
+  video?: string
   products: Product[]
 }
 
@@ -37,6 +43,7 @@ export const categories: Category[] = [
     title: 'Box & Plateaux',
     image: '/images/cat-box-plateaux.png',
     imageAlt: 'Grand plateau de sushis assortis à partager',
+    video: '/videos/categories/box-plateaux.mp4',
     products: [
       {
         name: 'Box Méga',
@@ -95,6 +102,7 @@ export const categories: Category[] = [
     title: 'Sushis',
     image: '/images/cat-sushis.png',
     imageAlt: 'Sushis nigiri au saumon frais',
+    video: '/videos/categories/sushis.mp4',
     products: [
       {
         name: 'Sushi Saumon',
@@ -113,6 +121,7 @@ export const categories: Category[] = [
     title: 'California & Maki',
     image: '/images/cat-california-maki.png',
     imageAlt: 'California rolls et maki au saumon',
+    video: '/videos/categories/california-maki.mp4',
     products: [
       { name: 'California Saumon', format: '8 pièces', price: '6,50 €' },
       {
@@ -131,6 +140,7 @@ export const categories: Category[] = [
     title: 'Crunch & Cristal',
     image: '/images/cat-crunch-cristal.png',
     imageAlt: 'Rolls crunch panés et rolls cristal translucides',
+    video: '/videos/categories/crunch-cristal.mp4',
     products: [
       {
         name: 'Crunch Thon Mayo',
@@ -169,6 +179,7 @@ export const categories: Category[] = [
     title: 'Snacking',
     image: '/images/cat-snacking.png',
     imageAlt: 'Sélection de snacking japonais : gyoza et brochettes yakitori',
+    video: '/videos/categories/snacking.mp4',
     products: [
       {
         name: 'Snack Thon Mayo',
@@ -201,6 +212,7 @@ export const categories: Category[] = [
     title: 'Donburi & Plats chauds',
     image: '/images/cat-donburi.png',
     imageAlt: 'Donburi de riz au poulet katsu et sauce spicy mayo',
+    video: '/videos/categories/donburi.mp4',
     products: [
       {
         name: 'Donburi Saumon',
@@ -231,6 +243,7 @@ export const categories: Category[] = [
     title: 'Poké Bowls',
     image: '/images/cat-poke.png',
     imageAlt: 'Poké bowl au saumon, mangue et avocat',
+    video: '/videos/categories/poke-bowls.mp4',
     products: [
       { name: 'Poké Honolulu', price: '9,99 €' },
       {

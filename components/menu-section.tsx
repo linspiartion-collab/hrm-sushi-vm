@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import type { Category } from '@/lib/menu'
 import { ProductDialog } from '@/components/product-dialog'
@@ -15,6 +15,35 @@ export function MenuSection({
 }) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const { ref, inView } = useInView<HTMLDivElement>()
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const mediaRef = useRef<HTMLDivElement>(null)
+
+  // Ne joue la vidéo de catégorie que lorsqu'elle est visible à l'écran
+  // (évite d'avoir plusieurs vidéos qui tournent en même temps hors champ).
+  useEffect(() => {
+    if (!category.video) return
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+    if (prefersReducedMotion) return
+
+    const node = mediaRef.current
+    const video = videoRef.current
+    if (!node || !video) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0.4 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [category.video])
 
   const total = category.products.length
   const selected = selectedIndex !== null ? category.products[selectedIndex] : null
@@ -28,6 +57,7 @@ export function MenuSection({
 
   const imageBlock = (
     <div
+      ref={mediaRef}
       className={`reveal ${inView ? 'is-visible' : ''} relative aspect-4/3 w-full overflow-hidden rounded-md border border-ink/10 shadow-sm`}
     >
       <Image
@@ -35,8 +65,21 @@ export function MenuSection({
         alt={category.imageAlt}
         fill
         sizes="(min-width: 768px) 380px, 100vw"
-        className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+        className={`object-cover transition-transform duration-700 ease-out hover:scale-105 ${category.video ? 'md:hidden' : ''}`}
       />
+      {category.video ? (
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={category.image}
+          className="absolute inset-0 hidden h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-105 md:block"
+        >
+          <source src={category.video} type="video/mp4" />
+        </video>
+      ) : null}
     </div>
   )
 
