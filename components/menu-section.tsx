@@ -28,7 +28,7 @@ export function MenuSection({
 
   const imageBlock = (
     <div
-      className={`reveal ${inView ? 'is-visible' : ''} relative aspect-4/3 w-full overflow-hidden rounded-md border border-ink/10 shadow-sm sm:aspect-square md:aspect-4/5`}
+      className={`reveal ${inView ? 'is-visible' : ''} relative aspect-4/3 w-full overflow-hidden rounded-md border border-ink/10 shadow-sm`}
     >
       <Image
         src={category.image || '/placeholder.svg'}

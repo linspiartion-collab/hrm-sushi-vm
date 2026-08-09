@@ -66,9 +66,8 @@ export function ProductDialog({
           <X className="h-5 w-5" />
         </button>
 
-        {/* Fond cream + image entière visible (object-contain) : plus de recadrage,
-            quel que soit le format de la photo fournie (portrait, carré, paysage). */}
-        <div className="relative flex h-[42vh] w-full items-center justify-center bg-cream sm:h-[440px]">
+        {/* Photo en 4:3, cadrée pour remplir tout le cadre sans bandes latérales. */}
+        <div className="relative aspect-4/3 w-full bg-cream">
           <Image
             src={image || '/placeholder.svg'}
             alt={imageAlt}
@@ -76,7 +75,7 @@ export function ProductDialog({
             sizes="(min-width: 640px) 700px, 100vw"
             quality={95}
             priority
-            className="object-contain"
+            className="object-cover"
           />
 
           {onPrev ? (
