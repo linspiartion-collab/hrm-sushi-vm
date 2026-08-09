@@ -47,11 +47,6 @@ export const categories: Category[] = [
           '4 sushi saumon, 4 sushi crevette, 5 maki crispy, 10 california, 10 maki thon avocat. Riz, algues, saumon, crevette, thon, avocat, concombre, oignon frit, ciboulette, sésame, sauce mayo épicée.',
       },
       {
-        name: 'Box Mixte',
-        format: '33 pièces',
-        price: '19,99 €',
-      },
-      {
         name: 'Plateau Passion',
         format: '18 pièces',
         price: '16,99 €',
@@ -70,8 +65,20 @@ export const categories: Category[] = [
       { name: 'Gourmet Saumon', format: '13 pièces', price: '14,99 €', image: '/images/produits/gourmet-saumon.jpg', composition: '5 sushi saumon, 4 california saumon, 4 crispy saumon.' },
       { name: 'Saumon Box', format: '14 pièces', price: '13,99 €', image: '/images/produits/saumon-box.jpg', composition: '4 sushi saumon, 4 california saumon, 2 maki saumon, 4 cristal avocat saumon.' },
       { name: 'Box Mix Édition', format: '22 pièces', price: '17,99 €', image: '/images/produits/box-mix-edition.jpg', composition: '3 sushi saumon laqué sésame, 3 sushi saumon, 4 california saumon, 4 cristal saumon, 4 california thon cuit mayonnaise épicée oignons frits, 4 maki avocat mangue.' },
-      { name: 'La Box du Mois', price: '9,99 €' },
-      { name: 'Box Gourmet', price: '12,99 €' },
+      {
+        name: 'La Box du Mois',
+        price: '9,99 €',
+        image: '/images/produits/la-box-du-mois.jpg',
+        composition:
+          '3 sushi saumon, 4 california thon cuit mayonnaise épicée oignons frits, 4 maki saumon, 4 maki avocat.',
+      },
+      {
+        name: 'Box Gourmet',
+        price: '12,99 €',
+        image: '/images/produits/box-gourmet.jpg',
+        composition:
+          '3 sushi saumon laqué sésame, 4 dragon saumon fromage concombre, 4 avocat mangue fromage saumon, 4 cristal poulet pané mayonnaise.',
+      },
       { name: 'Box Thon Mayo', format: '12 pièces', price: '7,99 €', image: '/images/produits/box-thon-mayo.jpg', composition: 'California thon cuit mayonnaise.' },
       {
         name: 'Box Brochettes Poulet Yakitori & Gyoza',
