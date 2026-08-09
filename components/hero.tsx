@@ -9,6 +9,10 @@ import { categories } from '@/lib/menu'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
+  // Évite que ScrollTrigger recalcule tout quand la barre d'adresse du
+  // navigateur mobile apparaît/disparaît en scrollant (cause principale
+  // de saccades sur iOS Safari et Chrome Android).
+  ScrollTrigger.config({ ignoreMobileResize: true })
 }
 
 export function Hero() {
@@ -59,14 +63,24 @@ export function Hero() {
       className="hero-scroll-wrap relative bg-ink text-cream"
     >
       <div className="sticky top-0 flex h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-16">
-        {/* Vidéo de fond (remplaçable via lib/brand.ts) — l'image sert de repli tant qu'elle charge */}
+        {/* Image de fond sur mobile (économise batterie/données, plus fiable que la vidéo sur téléphone) */}
+        <Image
+          src={brand.heroImage || '/placeholder.svg'}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none absolute inset-0 object-cover opacity-25 md:hidden"
+        />
+        {/* Vidéo de fond sur desktop/tablette uniquement (remplaçable via lib/brand.ts) */}
         <video
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
           poster={brand.heroImage}
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25"
+          className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover opacity-25 md:block"
         >
           <source src={brand.heroVideo} type="video/mp4" />
         </video>
