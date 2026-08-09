@@ -46,12 +46,16 @@ export function MenuSection({
       </h2>
 
       <ul className="mt-6 divide-y divide-ink/10 border-t border-ink/10">
-        {category.products.map((product) => (
-          <li key={`${product.name}-${product.format ?? ''}`}>
+        {category.products.map((product, i) => (
+          <li
+            key={`${product.name}-${product.format ?? ''}`}
+            className={`reveal ${inView ? 'is-visible' : ''}`}
+            style={{ transitionDelay: inView ? `${0.2 + i * 0.05}s` : '0s' }}
+          >
             <button
               type="button"
               onClick={() => setSelected(product)}
-              className="flex w-full items-baseline justify-between gap-4 py-3.5 text-left transition hover:bg-ink/[0.03]"
+              className="flex w-full items-baseline justify-between gap-4 py-3.5 text-left transition hover:bg-ink/[0.03] hover:pl-1"
             >
               <div className="min-w-0">
                 <p className="font-serif text-sm font-bold uppercase leading-snug tracking-wide text-ink sm:text-base">

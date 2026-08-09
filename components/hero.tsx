@@ -36,23 +36,23 @@ export function Hero() {
           width={627}
           height={924}
           priority
-          className="h-40 w-auto sm:h-52"
+          className="hero-in h-40 w-auto sm:h-52"
         />
 
-        <h1 className="font-serif text-3xl font-black uppercase leading-tight tracking-tight text-balance sm:text-4xl md:text-5xl">
+        <h1 className="hero-in hero-in-delay-1 font-serif text-3xl font-black uppercase leading-tight tracking-tight text-balance sm:text-4xl md:text-5xl">
           Vos sushis préférés,{' '}
           <span className="text-brand">préparés chaque jour</span> dans votre
           corner Auchan
         </h1>
 
-        <p className="max-w-xl text-pretty text-base leading-relaxed text-cream/75 sm:text-lg">
+        <p className="hero-in hero-in-delay-2 max-w-xl text-pretty text-base leading-relaxed text-cream/75 sm:text-lg">
           Recettes fraîches, préparées sur place par nos chefs sushimen — à
           emporter en un instant.
         </p>
 
         <a
           href={`#${firstCategory.id}`}
-          className="rounded-full bg-brand px-8 py-4 text-sm font-semibold uppercase tracking-widest text-cream transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
+          className="hero-in hero-in-delay-3 rounded-full bg-brand px-8 py-4 text-sm font-semibold uppercase tracking-widest text-cream transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
         >
           Voir la carte
         </a>

@@ -8,6 +8,10 @@ import { categories } from '@/lib/menu'
 export function CategoryNav() {
   const [active, setActive] = useState(categories[0].id)
   const listRef = useRef<HTMLUListElement>(null)
+  const itemRefs = useRef(new Map<string, HTMLAnchorElement>())
+  const [pill, setPill] = useState<{ left: number; width: number } | null>(
+    null,
+  )
 
   useEffect(() => {
     const sections = categories
@@ -29,11 +33,29 @@ export function CategoryNav() {
     return () => observer.disconnect()
   }, [])
 
+  // Mesure la position/largeur du lien actif pour faire glisser l'indicateur derrière lui
+  useEffect(() => {
+    const measure = () => {
+      const item = itemRefs.current.get(active)
+      const list = listRef.current
+      if (!item || !list) return
+      const itemRect = item.getBoundingClientRect()
+      const listRect = list.getBoundingClientRect()
+      setPill({
+        left: itemRect.left - listRect.left + list.scrollLeft,
+        width: itemRect.width,
+      })
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [active])
+
   // Garde la pilule active visible dans la barre scrollable sur mobile
   useEffect(() => {
     const list = listRef.current
     if (!list) return
-    const item = list.querySelector<HTMLAnchorElement>(`a[href="#${active}"]`)
+    const item = itemRefs.current.get(active)
     if (!item) return
 
     const listBox = list.getBoundingClientRect()
@@ -67,19 +89,31 @@ export function CategoryNav() {
         </a>
         <ul
           ref={listRef}
-          className="no-scrollbar flex flex-1 gap-2 overflow-x-auto py-3"
+          className="no-scrollbar relative flex flex-1 gap-2 overflow-x-auto py-3"
         >
+          {/* Pilule qui glisse derrière le lien actif */}
+          {pill ? (
+            <div
+              aria-hidden="true"
+              className="nav-pill-indicator absolute left-0 top-1.5 bottom-1.5 rounded-full bg-brand"
+              style={{ transform: `translateX(${pill.left}px)`, width: pill.width }}
+            />
+          ) : null}
           {categories.map((category) => {
             const isActive = active === category.id
             return (
-              <li key={category.id} className="shrink-0">
+              <li key={category.id} className="relative z-10 shrink-0">
                 <a
+                  ref={(node) => {
+                    if (node) itemRefs.current.set(category.id, node)
+                    else itemRefs.current.delete(category.id)
+                  }}
                   href={`#${category.id}`}
                   aria-current={isActive ? 'true' : undefined}
-                  className={`block whitespace-nowrap rounded-full border px-4 py-3 text-xs font-semibold uppercase tracking-wider transition-colors ${
+                  className={`block whitespace-nowrap rounded-full border border-transparent px-4 py-3 text-xs font-semibold uppercase tracking-wider transition-colors duration-300 ${
                     isActive
-                      ? 'border-brand bg-brand text-cream'
-                      : 'border-ink/15 bg-transparent text-ink hover:border-brand hover:text-brand'
+                      ? 'text-cream'
+                      : 'border-ink/15 text-ink hover:border-brand hover:text-brand'
                   }`}
                 >
                   {category.title}
