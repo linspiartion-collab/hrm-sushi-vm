@@ -12,6 +12,7 @@
   --color-brand: var(--brand);
   --color-brand-dark: var(--brand-dark);
   --color-ink: var(--ink);
+  --color-ink-light: var(--ink-light);
   --color-cream: var(--cream);
   --color-paper: var(--paper);
 
@@ -63,6 +64,7 @@
   --brand: #d31e14;
   --brand-dark: #a5170d;
   --ink: #1c1b1c;
+  --ink-light: #262425;
   --cream: #faf7f2;
   --paper: #f1ece3;
 

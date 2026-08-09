@@ -11,7 +11,7 @@ export default function Page() {
       <Hero />
       <Highlights />
       <CategoryNav />
-      <main className="bg-paper">
+      <main className="bg-ink">
         <h2 className="sr-only">Notre carte</h2>
         {categories.map((category, index) => (
           <MenuSection key={category.id} category={category} index={index} />

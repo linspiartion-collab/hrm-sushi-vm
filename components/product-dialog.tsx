@@ -54,7 +54,7 @@ export function ProductDialog({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl overflow-hidden rounded-t-2xl bg-paper animate-in fade-in slide-in-from-bottom-8 duration-300 sm:rounded-sm sm:zoom-in-95 sm:slide-in-from-bottom-0"
+        className="relative w-full max-w-2xl overflow-hidden rounded-t-2xl bg-ink animate-in fade-in slide-in-from-bottom-8 duration-300 sm:rounded-sm sm:zoom-in-95 sm:slide-in-from-bottom-0"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -67,7 +67,7 @@ export function ProductDialog({
         </button>
 
         {/* Photo en 4:3, cadrée pour remplir tout le cadre sans bandes latérales. */}
-        <div className="relative aspect-4/3 w-full bg-cream">
+        <div className="relative aspect-4/3 w-full bg-ink-light">
           <Image
             src={image || '/placeholder.svg'}
             alt={imageAlt}
@@ -110,13 +110,13 @@ export function ProductDialog({
 
           <h3
             id="product-dialog-title"
-            className="mt-1 font-serif text-2xl font-black uppercase tracking-tight text-ink sm:text-3xl"
+            className="mt-1 font-serif text-2xl font-black uppercase tracking-tight text-cream sm:text-3xl"
           >
             {product.name}
           </h3>
 
           {product.composition ? (
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            <p className="mt-4 text-sm leading-relaxed text-cream/70 sm:text-base">
               {product.composition}
             </p>
           ) : null}

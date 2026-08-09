@@ -71,7 +71,7 @@ export function CategoryNav() {
   return (
     <nav
       aria-label="Catégories de la carte"
-      className="sticky top-0 z-40 border-y border-ink/10 bg-cream/95 backdrop-blur"
+      className="sticky top-0 z-40 border-y border-cream/10 bg-ink/95 backdrop-blur"
     >
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4">
         <a
@@ -80,7 +80,7 @@ export function CategoryNav() {
           className="hidden shrink-0 py-2 sm:block"
         >
           <Image
-            src={brand.logo || '/placeholder.svg'}
+            src={brand.logoLight || '/placeholder.svg'}
             alt={brand.logoAlt}
             width={627}
             height={924}
@@ -113,7 +113,7 @@ export function CategoryNav() {
                   className={`block whitespace-nowrap rounded-full border border-transparent px-4 py-3 text-xs font-semibold uppercase tracking-wider transition-colors duration-300 ${
                     isActive
                       ? 'text-cream'
-                      : 'border-ink/15 text-ink hover:border-brand hover:text-brand'
+                      : 'border-cream/15 text-cream/70 hover:border-brand hover:text-brand'
                   }`}
                 >
                   {category.title}

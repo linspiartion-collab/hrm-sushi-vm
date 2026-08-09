@@ -56,7 +56,7 @@ export function Highlights() {
   }, [])
 
   return (
-    <section className="bg-cream px-6 py-14 sm:py-16" aria-label="Nos atouts">
+    <section className="bg-ink px-6 py-14 sm:py-16" aria-label="Nos atouts">
       <div
         ref={gridRef}
         className="mx-auto grid max-w-5xl gap-10 sm:grid-cols-3 sm:gap-8"
@@ -71,10 +71,10 @@ export function Highlights() {
               strokeWidth={1.75}
               aria-hidden="true"
             />
-            <h2 className="font-serif text-base font-bold uppercase tracking-wide text-ink">
+            <h2 className="font-serif text-base font-bold uppercase tracking-wide text-cream">
               {title}
             </h2>
-            <p className="max-w-xs text-pretty text-sm leading-relaxed text-muted-foreground">
+            <p className="max-w-xs text-pretty text-sm leading-relaxed text-cream/60">
               {text}
             </p>
           </div>
