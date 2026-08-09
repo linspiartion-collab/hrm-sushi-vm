@@ -54,6 +54,14 @@ export const categories: Category[] = [
           '4 sushi saumon, 4 sushi crevette, 5 maki crispy, 10 california, 10 maki thon avocat. Riz, algues, saumon, crevette, thon, avocat, concombre, oignon frit, ciboulette, sésame, sauce mayo épicée.',
       },
       {
+        name: 'Box Mixte',
+        format: '33 pièces',
+        price: '19,99 €',
+        image: '/images/produits/box-mixte-33.jpg',
+        composition:
+          '4 sushi saumon, 4 sushi crevette, 5 maki crispy, 10 california, 10 maki thon avocat. Riz, algues, saumon, crevette, thon, avocat, concombre, oignon frit, ciboulette, sésame, sauce mayo épicée.',
+      },
+      {
         name: 'Plateau Passion',
         format: '18 pièces',
         price: '16,99 €',
@@ -112,7 +120,13 @@ export const categories: Category[] = [
         composition: '10 sushi saumon.',
       },
       { name: 'Sushi Saumon', format: '6 pièces', price: '8,99 €', image: '/images/produits/sushi-saumon-6.jpg', composition: '6 sushi saumon.' },
-      { name: 'Sushi Go', price: '11,99 €' },
+      {
+        name: 'Sushi Go',
+        price: '11,99 €',
+        image: '/images/produits/sushi-go.jpg',
+        composition:
+          '4 maki saumon, 4 california saumon, 2 rice sandwich saumon, 6 california végétarien oignons frits.',
+      },
     ],
   },
   {
@@ -183,7 +197,7 @@ export const categories: Category[] = [
     products: [
       {
         name: 'Snack Thon Mayo',
-        format: '10 pièces',
+        format: '18 pièces',
         price: '9,50 €',
         image: '/images/produits/snack-thon-mayonnaise-10.jpg',
         composition:
