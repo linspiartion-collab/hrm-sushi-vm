@@ -63,19 +63,19 @@ export const categories: Category[] = [
         composition:
           '5 sushi saumon, 4 maki concombre, 4 california saumon, 4 california thon cuit mayonnaise oignons frits, 2 maki saumon.',
       },
-      { name: 'Gourmet Saumon', format: '13 pièces', price: '14,99 €' },
+      { name: 'Gourmet Saumon', format: '13 pièces', price: '14,99 €', image: '/images/produits/gourmet-saumon.jpg', composition: '5 sushi saumon, 4 california saumon, 4 crispy saumon.' },
       { name: 'Saumon Box', format: '14 pièces', price: '13,99 €', image: '/images/produits/saumon-box.jpg', composition: '4 sushi saumon, 4 california saumon, 2 maki saumon, 4 cristal avocat saumon.' },
       { name: 'Box Mix Édition', format: '22 pièces', price: '17,99 €', image: '/images/produits/box-mix-edition.jpg', composition: '3 sushi saumon laqué sésame, 3 sushi saumon, 4 california saumon, 4 cristal saumon, 4 california thon cuit mayonnaise épicée oignons frits, 4 maki avocat mangue.' },
       { name: 'La Box du Mois', price: '9,99 €' },
       { name: 'Box Gourmet', price: '12,99 €' },
-      { name: 'Box Thon Mayo', format: '12 pièces', price: '7,99 €' },
+      { name: 'Box Thon Mayo', format: '12 pièces', price: '7,99 €', image: '/images/produits/box-thon-mayo.jpg', composition: 'California thon cuit mayonnaise.' },
       {
         name: 'Box Brochettes Poulet Yakitori & Gyoza',
         price: '8,99 €',
         image: '/images/produits/box-brochettes-poulet-yakitori-gyoza.jpg',
         composition: '2 brochettes de poulet sauce soja sucrée décongelées, 3 raviolis aux légumes décongelés, riz vinaigré.',
       },
-      { name: 'Mini Box Rice Sandwich', format: '4 pièces', price: '6,50 €' },
+      { name: 'Mini Box Rice Sandwich', format: '4 pièces', price: '6,50 €', image: '/images/produits/mini-box-rice-sandwich.jpg', composition: '2 rice sandwich saumon fromage, 2 rice sandwich thon cuit mayonnaise.' },
     ],
   },
   {
@@ -142,6 +142,13 @@ export const categories: Category[] = [
         price: '5,99 €',
         image: '/images/produits/cristal-thon-mayonnaise.jpg',
         composition: '8 cristal thon cuit mayonnaise.',
+      },
+      {
+        name: 'Cristal Saumon',
+        format: '8 pièces',
+        price: '6,50 €',
+        image: '/images/produits/cristal-saumon.jpg',
+        composition: 'Cristal saumon, crudités.',
       },
     ],
   },
@@ -222,7 +229,7 @@ export const categories: Category[] = [
         composition:
           'Saumon cru, avocat, concombre, radis, wakamé, edamame, carottes râpées, riz vinaigré, sauce maison, sésame.',
       },
-      { name: 'Mini Poké Saumon Mangue', price: '5,50 €' },
+      { name: 'Mini Poké Saumon Mangue', price: '5,50 €', image: '/images/produits/mini-poke-saumon-mangue.jpg', composition: 'Riz vinaigré, saumon, mangue & concombre.' },
     ],
   },
 ]
