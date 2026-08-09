@@ -4,65 +4,106 @@ import { useState } from 'react'
 import Image from 'next/image'
 import type { Category, Product } from '@/lib/menu'
 import { ProductDialog } from '@/components/product-dialog'
+import { useInView } from '@/lib/use-in-view'
 
-export function MenuSection({ category }: { category: Category }) {
+export function MenuSection({
+  category,
+  index,
+}: {
+  category: Category
+  index: number
+}) {
   const [selected, setSelected] = useState<Product | null>(null)
+  const { ref, inView } = useInView<HTMLDivElement>()
+
+  const isReversed = index % 2 === 1
+  const sectionBg = index % 2 === 0 ? 'bg-paper' : 'bg-cream'
+
+  const imageBlock = (
+    <div
+      className={`reveal ${inView ? 'is-visible' : ''} relative aspect-4/3 w-full overflow-hidden rounded-md border border-ink/10 shadow-sm sm:aspect-square md:aspect-4/5`}
+    >
+      <Image
+        src={category.image || '/placeholder.svg'}
+        alt={category.imageAlt}
+        fill
+        sizes="(min-width: 768px) 380px, 100vw"
+        className="object-cover transition-transform duration-700 ease-out hover:scale-105"
+      />
+    </div>
+  )
+
+  const textBlock = (
+    <div className={`reveal reveal-delay-1 ${inView ? 'is-visible' : ''}`}>
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+        {category.label}
+      </p>
+      <h2
+        id={`${category.id}-title`}
+        className="mt-2 font-serif text-2xl font-black uppercase tracking-tight text-ink sm:text-3xl"
+      >
+        {category.title}
+      </h2>
+
+      <ul className="mt-6 divide-y divide-ink/10 border-t border-ink/10">
+        {category.products.map((product) => (
+          <li key={`${product.name}-${product.format ?? ''}`}>
+            <button
+              type="button"
+              onClick={() => setSelected(product)}
+              className="flex w-full items-baseline justify-between gap-4 py-3.5 text-left transition hover:bg-ink/[0.03]"
+            >
+              <div className="min-w-0">
+                <p className="font-serif text-sm font-bold uppercase leading-snug tracking-wide text-ink sm:text-base">
+                  {product.name}
+                </p>
+                {product.format ? (
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    {product.format}
+                  </p>
+                ) : null}
+              </div>
+              <p className="shrink-0 font-mono text-sm font-semibold tabular-nums text-brand sm:text-base">
+                {product.price}
+              </p>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
 
   return (
     <section
       id={category.id}
       aria-labelledby={`${category.id}-title`}
-      className="border-b border-ink/10 px-6 py-12 last:border-b-0 sm:py-16"
+      className={`relative overflow-hidden px-6 py-14 sm:py-20 ${sectionBg}`}
     >
-      <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[minmax(0,260px)_1fr] md:gap-12">
-        {/* Vignette photo — remplaçable via lib/menu.ts */}
-        <div className="relative aspect-square w-full overflow-hidden rounded-sm border border-ink/10 bg-cream md:aspect-4/5">
-          <Image
-            src={category.image || '/placeholder.svg'}
-            alt={category.imageAlt}
-            fill
-            sizes="(min-width: 768px) 260px, 100vw"
-            className="object-cover"
-          />
-        </div>
+      {/* Fine bande de rayures rouges — signature visuelle reprise du hero */}
+      <div
+        aria-hidden="true"
+        className="hero-stripes pointer-events-none absolute inset-x-0 top-0 h-2 opacity-70"
+      />
 
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-            {category.label}
-          </p>
-          <h2
-            id={`${category.id}-title`}
-            className="mt-2 font-serif text-2xl font-black uppercase tracking-tight text-ink sm:text-3xl"
-          >
-            {category.title}
-          </h2>
-
-          <ul className="mt-6 divide-y divide-ink/10 border-t border-ink/10">
-            {category.products.map((product) => (
-              <li key={`${product.name}-${product.format ?? ''}`}>
-                <button
-                  type="button"
-                  onClick={() => setSelected(product)}
-                  className="flex w-full items-baseline justify-between gap-4 py-3.5 text-left transition hover:bg-ink/[0.03]"
-                >
-                  <div className="min-w-0">
-                    <p className="font-serif text-sm font-bold uppercase leading-snug tracking-wide text-ink sm:text-base">
-                      {product.name}
-                    </p>
-                    {product.format ? (
-                      <p className="mt-0.5 text-xs text-muted-foreground">
-                        {product.format}
-                      </p>
-                    ) : null}
-                  </div>
-                  <p className="shrink-0 font-mono text-sm font-semibold tabular-nums text-brand sm:text-base">
-                    {product.price}
-                  </p>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div
+        ref={ref}
+        className={`mx-auto grid max-w-5xl gap-8 md:gap-14 ${
+          isReversed
+            ? 'md:grid-cols-[1fr_minmax(0,380px)]'
+            : 'md:grid-cols-[minmax(0,380px)_1fr]'
+        }`}
+      >
+        {isReversed ? (
+          <>
+            {textBlock}
+            {imageBlock}
+          </>
+        ) : (
+          <>
+            {imageBlock}
+            {textBlock}
+          </>
+        )}
       </div>
 
       <ProductDialog

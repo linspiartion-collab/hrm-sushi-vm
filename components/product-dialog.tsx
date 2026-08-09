@@ -40,14 +40,14 @@ export function ProductDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-ink/60 backdrop-blur-sm sm:items-center sm:p-6"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-ink/60 backdrop-blur-sm animate-in fade-in duration-300 sm:items-center sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="product-dialog-title"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl overflow-hidden rounded-t-2xl bg-paper sm:rounded-sm"
+        className="relative w-full max-w-2xl overflow-hidden rounded-t-2xl bg-paper animate-in fade-in slide-in-from-bottom-8 duration-300 sm:rounded-sm sm:zoom-in-95 sm:slide-in-from-bottom-0"
         onClick={(e) => e.stopPropagation()}
       >
         <button

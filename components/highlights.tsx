@@ -1,4 +1,7 @@
+'use client'
+
 import { ChefHat, Store, Timer } from 'lucide-react'
+import { useInView } from '@/lib/use-in-view'
 
 const items = [
   {
@@ -19,11 +22,20 @@ const items = [
 ]
 
 export function Highlights() {
+  const { ref, inView } = useInView<HTMLDivElement>()
+
   return (
     <section className="bg-cream px-6 py-14 sm:py-16" aria-label="Nos atouts">
-      <div className="mx-auto grid max-w-5xl gap-10 sm:grid-cols-3 sm:gap-8">
-        {items.map(({ icon: Icon, title, text }) => (
-          <div key={title} className="flex flex-col items-center gap-3 text-center">
+      <div
+        ref={ref}
+        className="mx-auto grid max-w-5xl gap-10 sm:grid-cols-3 sm:gap-8"
+      >
+        {items.map(({ icon: Icon, title, text }, i) => (
+          <div
+            key={title}
+            style={{ transitionDelay: inView ? `${i * 0.12}s` : '0s' }}
+            className={`reveal ${inView ? 'is-visible' : ''} flex flex-col items-center gap-3 text-center`}
+          >
             <Icon
               className="h-6 w-6 text-brand"
               strokeWidth={1.75}

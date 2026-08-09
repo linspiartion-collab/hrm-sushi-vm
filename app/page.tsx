@@ -13,8 +13,8 @@ export default function Page() {
       <CategoryNav />
       <main className="bg-paper">
         <h2 className="sr-only">Notre carte</h2>
-        {categories.map((category) => (
-          <MenuSection key={category.id} category={category} />
+        {categories.map((category, index) => (
+          <MenuSection key={category.id} category={category} index={index} />
         ))}
       </main>
       <SiteFooter />
