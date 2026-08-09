@@ -11,10 +11,23 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
   const stripesRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const logoRef = useRef<HTMLImageElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
   const ctaRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    // React ne pose pas toujours l'attribut `muted` sur l'élément DOM à temps
+    // pour que le navigateur autorise l'autoplay (bug connu React/Next avec
+    // <video muted>, particulièrement sur mobile) — on le repose explicitement
+    // en JS avant de (re)lancer play(). play() peut être rejeté (ex: mode
+    // économie de données) : dans ce cas l'image poster reste affichée.
+    video.muted = true
+    video.play()?.catch(() => {})
+  }, [])
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -61,6 +74,7 @@ export function Hero() {
             playsInline+muted+autoPlay sont requis pour l'autoplay inline sur
             iOS Safari / Chrome Android. */}
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
