@@ -38,14 +38,18 @@ export const categories: Category[] = [
     image: '/images/cat-box-plateaux.png',
     imageAlt: 'Grand plateau de sushis assortis à partager',
     products: [
-      { name: 'Box Méga', format: '39 pièces', price: '19,99 €' },
       {
-        name: 'Box Mixte',
-        format: '33 pièces',
+        name: 'Box Méga',
+        format: '39 pièces',
         price: '19,99 €',
         image: '/images/produits/box-mixte.jpg',
         composition:
           '4 sushi saumon, 4 sushi crevette, 5 maki crispy, 10 california, 10 maki thon avocat. Riz, algues, saumon, crevette, thon, avocat, concombre, oignon frit, ciboulette, sésame, sauce mayo épicée.',
+      },
+      {
+        name: 'Box Mixte',
+        format: '33 pièces',
+        price: '19,99 €',
       },
       {
         name: 'Plateau Passion',
