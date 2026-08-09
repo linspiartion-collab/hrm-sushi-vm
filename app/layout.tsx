@@ -1,27 +1,12 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display, IBM_Plex_Mono } from 'next/font/google'
+import '@fontsource-variable/inter'
+import '@fontsource/playfair-display/700.css'
+import '@fontsource/playfair-display/800.css'
+import '@fontsource/playfair-display/900.css'
+import '@fontsource/ibm-plex-mono/500.css'
+import '@fontsource/ibm-plex-mono/600.css'
 import './globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['700', '800', '900'],
-  variable: '--font-playfair',
-  display: 'swap',
-})
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['500', '600'],
-  variable: '--font-mono-ticket',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'HRM Sushi — Corner sushi dans votre magasin Auchan',
@@ -78,10 +63,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="fr"
-      className={`light bg-background ${inter.variable} ${playfair.variable} ${plexMono.variable}`}
-    >
+    <html lang="fr" className="light bg-background">
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

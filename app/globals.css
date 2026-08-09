@@ -57,6 +57,9 @@
 
 :root {
   color-scheme: light;
+  --font-inter: 'Inter Variable';
+  --font-playfair: 'Playfair Display';
+  --font-mono-ticket: 'IBM Plex Mono';
   --brand: #d31e14;
   --brand-dark: #a5170d;
   --ink: #1c1b1c;
