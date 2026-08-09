@@ -1,7 +1,11 @@
 'use client'
 
+import { useRef, useLayoutEffect } from 'react'
 import { ChefHat, Store, Timer } from 'lucide-react'
-import { useInView } from '@/lib/use-in-view'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const items = [
   {
@@ -22,19 +26,45 @@ const items = [
 ]
 
 export function Highlights() {
-  const { ref, inView } = useInView<HTMLDivElement>()
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+    if (prefersReducedMotion) return
+
+    const ctx = gsap.context(() => {
+      const cards = gridRef.current
+        ? Array.from(gridRef.current.children)
+        : []
+      ScrollTrigger.batch(cards, {
+        start: 'top 80%',
+        once: true,
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power3.out',
+            stagger: 0.12,
+          }),
+      })
+    }, gridRef)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section className="bg-cream px-6 py-14 sm:py-16" aria-label="Nos atouts">
       <div
-        ref={ref}
+        ref={gridRef}
         className="mx-auto grid max-w-5xl gap-10 sm:grid-cols-3 sm:gap-8"
       >
-        {items.map(({ icon: Icon, title, text }, i) => (
+        {items.map(({ icon: Icon, title, text }) => (
           <div
             key={title}
-            style={{ transitionDelay: inView ? `${i * 0.12}s` : '0s' }}
-            className={`reveal ${inView ? 'is-visible' : ''} flex flex-col items-center gap-3 text-center`}
+            className="scroll-reveal flex flex-col items-center gap-3 text-center"
           >
             <Icon
               className="h-6 w-6 text-brand"

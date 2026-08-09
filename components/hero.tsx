@@ -20,11 +20,6 @@ export function Hero() {
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
-    // React ne pose pas toujours l'attribut `muted` sur l'élément DOM à temps
-    // pour que le navigateur autorise l'autoplay (bug connu React/Next avec
-    // <video muted>, particulièrement sur mobile) — on le repose explicitement
-    // en JS avant de (re)lancer play(). play() peut être rejeté (ex: mode
-    // économie de données) : dans ce cas l'image poster reste affichée.
     video.muted = true
     video.play()?.catch(() => {})
   }, [])
@@ -33,30 +28,32 @@ export function Hero() {
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
-    // Si l'utilisateur préfère moins de mouvement, on laisse le hero statique
-    // (tout le contenu reste visible immédiatement, sans mouvement).
     if (prefersReducedMotion) return
 
-    // Animation d'entrée jouée une seule fois au chargement de la page — plus
-    // de scroll requis pour voir apparaître le titre/CTA. Séquence : le fond
-    // s'éclaircit, les rayures se déploient depuis la gauche (signature de
-    // marque), le logo se pose, puis le texte et le bouton arrivent en cascade.
     const ctx = gsap.context(() => {
-      const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
-      // Chaque élément part de l'état posé par sa classe `*-in` en CSS ;
-      // GSAP l'anime vers son état final (opacity/transform à 0/none).
-      timeline
-        .to(bgRef.current, { opacity: 1, duration: 0.7, ease: 'power1.out' }, 0)
-        .to(stripesRef.current, { scaleX: 1, duration: 0.9, ease: 'power3.out' }, 0.05)
-        .to(logoRef.current, { opacity: 1, scale: 1, y: 0, duration: 0.9 }, 0.15)
-        .to(titleRef.current, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.55)
-        .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.68)
+      tl
         .to(
-          ctaRef.current,
-          { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'back.out(1.6)' },
-          0.82,
+          bgRef.current,
+          { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' },
+          0,
         )
+        .to(stripesRef.current, { scaleX: 1, duration: 0.7, ease: 'power3.out' }, 0.1)
+        .to(
+          logoRef.current,
+          {
+            opacity: 1,
+            scale: 1,
+            clipPath: 'inset(0 0% 0 0)',
+            duration: 1,
+            ease: 'back.out(1.4)',
+          },
+          0.8,
+        )
+        .to(titleRef.current, { opacity: 1, y: 0, duration: 0.6 }, 1.8)
+        .to(subtitleRef.current, { opacity: 1, y: 0, duration: 0.6 }, 1.95)
+        .to(ctaRef.current, { opacity: 1, y: 0, duration: 0.6 }, 2.1)
     }, sectionRef)
 
     return () => ctx.revert()
@@ -69,10 +66,6 @@ export function Hero() {
       className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-ink px-6 py-16 text-cream"
     >
       <div ref={bgRef} className="hero-bg-in pointer-events-none absolute inset-0">
-        {/* Vidéo de fond (desktop et mobile) — poster affiché tant que la vidéo
-            n'a pas assez chargé, et automatiquement si la lecture échoue.
-            playsInline+muted+autoPlay sont requis pour l'autoplay inline sur
-            iOS Safari / Chrome Android. */}
         <video
           ref={videoRef}
           autoPlay
@@ -86,7 +79,6 @@ export function Hero() {
           <source src={brand.heroVideo} type="video/mp4" />
         </video>
       </div>
-      {/* Motif de fines bandes verticales rouges — se déploie depuis la gauche à l'arrivée */}
       <div
         ref={stripesRef}
         aria-hidden="true"
@@ -128,7 +120,7 @@ export function Hero() {
         <a
           ref={ctaRef}
           href={`#${firstCategory.id}`}
-          className="hero-cta-in rounded-full bg-brand px-8 py-4 text-sm font-semibold uppercase tracking-widest text-cream transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
+          className="hero-reveal-target rounded-full bg-brand px-8 py-4 text-sm font-semibold uppercase tracking-widest text-cream transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cream"
         >
           Voir la carte
         </a>

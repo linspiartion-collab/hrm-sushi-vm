@@ -180,8 +180,8 @@
     @apply bg-background text-foreground;
   }
   html {
-    scroll-behavior: smooth;
-    /* hauteur de la nav catégories sticky */
+    /* hauteur de la nav catégories sticky — Lenis lit scroll-padding-top
+       pour les ancres (voir components/smooth-scroll.tsx) */
     scroll-padding-top: 4.25rem;
   }
 }
@@ -206,30 +206,14 @@
 
 /* Animations d'apparition au scroll — désactivées si l'utilisateur préfère moins de mouvement */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal {
+  .scroll-reveal {
     opacity: 0;
-    transform: translateY(28px);
-    transition:
-      opacity 0.7s cubic-bezier(0.16, 0.84, 0.44, 1),
-      transform 0.7s cubic-bezier(0.16, 0.84, 0.44, 1);
-  }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: none;
-  }
-  .reveal-delay-1 {
-    transition-delay: 0.1s;
-  }
-  .reveal-delay-2 {
-    transition-delay: 0.2s;
+    transform: translateY(24px);
   }
 
-  /* États initiaux de l'animation d'entrée du hero, jouée une seule fois au
-     chargement de la page par GSAP (voir hero.tsx). Poser l'état caché en CSS
-     (plutôt que de laisser GSAP l'appliquer en JS après le premier paint)
-     évite un flash de contenu visible avant que l'animation ne démarre. */
   .hero-bg-in {
     opacity: 0;
+    transform: scale(1.08);
   }
   .hero-stripes-in {
     transform: scaleX(0);
@@ -237,18 +221,14 @@
   }
   .hero-logo-in {
     opacity: 0;
-    transform: scale(1.08) translateY(-24px);
+    transform: scale(0.85);
+    clip-path: inset(0 100% 0 0);
   }
   .hero-reveal-target {
     opacity: 0;
-    transform: translateY(28px);
-  }
-  .hero-cta-in {
-    opacity: 0;
-    transform: translateY(16px) scale(0.94);
+    transform: translateY(20px);
   }
 
-  /* Indicateur qui glisse derrière la pilule active dans la nav */
   .nav-pill-indicator {
     transition:
       transform 0.4s cubic-bezier(0.16, 0.84, 0.44, 1),

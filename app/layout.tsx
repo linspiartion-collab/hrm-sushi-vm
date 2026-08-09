@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import 'lenis/dist/lenis.css'
 import '@fontsource-variable/inter'
 import '@fontsource/playfair-display/700.css'
 import '@fontsource/playfair-display/800.css'
@@ -7,6 +8,7 @@ import '@fontsource/playfair-display/900.css'
 import '@fontsource/ibm-plex-mono/500.css'
 import '@fontsource/ibm-plex-mono/600.css'
 import './globals.css'
+import { SmoothScroll } from '@/components/smooth-scroll'
 
 export const metadata: Metadata = {
   title: 'HRM Sushi — Corner sushi dans votre magasin Auchan',
@@ -65,6 +67,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="light bg-background">
       <body className="font-sans antialiased">
+        <SmoothScroll />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
