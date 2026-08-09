@@ -221,94 +221,15 @@
     transition-delay: 0.2s;
   }
 
-  /* Animation d'entrée du hero au chargement de la page */
-  .hero-in {
+  /* Section hero : hauteur augmentée pour laisser de la place au scroll
+     qui pilote l'animation du logo et l'apparition du contenu (voir hero.tsx / GSAP) */
+  .hero-scroll-wrap {
+    height: 200vh;
+  }
+
+  /* État initial du titre / texte / bouton, révélés progressivement par GSAP au scroll */
+  .hero-reveal-target {
     opacity: 0;
-    transform: translateY(16px);
-    animation: hero-rise 0.9s cubic-bezier(0.16, 0.84, 0.44, 1) forwards;
-  }
-  .hero-in-delay-1 {
-    animation-delay: 0.2s;
-  }
-  .hero-in-delay-2 {
-    animation-delay: 0.55s;
-  }
-  .hero-in-delay-3 {
-    animation-delay: 0.75s;
-  }
-
-  @keyframes hero-rise {
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  /* Zoom ambiant très lent de la photo de fond — donne vie au hero en continu */
-  .hero-bg-zoom {
-    animation: hero-bg-zoom 22s ease-in-out infinite alternate;
-  }
-  @keyframes hero-bg-zoom {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.12);
-    }
-  }
-
-  /* Rayures qui se révèlent en fondu, léger décalage après le logo */
-  .hero-stripes-in {
-    opacity: 0;
-    animation: hero-stripes-fade 1.6s ease-out 0.1s forwards;
-  }
-  @keyframes hero-stripes-fade {
-    to {
-      opacity: 0.6;
-    }
-  }
-
-  /* Logo : léger rebond à l'arrivée plutôt qu'un simple fondu */
-  .hero-logo-in {
-    opacity: 0;
-    transform: scale(0.82) translateY(10px);
-    animation: hero-logo-rise 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-  @keyframes hero-logo-rise {
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  /* Titre : les lettres se resserrent légèrement en apparaissant */
-  .hero-title-in {
-    opacity: 0;
-    transform: translateY(22px);
-    letter-spacing: 0.04em;
-    animation: hero-title-rise 0.9s cubic-bezier(0.16, 0.84, 0.44, 1) 0.35s
-      forwards;
-  }
-  @keyframes hero-title-rise {
-    to {
-      opacity: 1;
-      transform: none;
-      letter-spacing: normal;
-    }
-  }
-
-  /* Bouton CTA : petit rebond, façon "pop" */
-  .hero-cta-in {
-    opacity: 0;
-    transform: scale(0.88) translateY(8px);
-    animation: hero-cta-rise 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s
-      forwards;
-  }
-  @keyframes hero-cta-rise {
-    to {
-      opacity: 1;
-      transform: none;
-    }
   }
 
   /* Indicateur qui glisse derrière la pilule active dans la nav */
