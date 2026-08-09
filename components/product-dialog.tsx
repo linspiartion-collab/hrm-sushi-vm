@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import Image from 'next/image'
-import { X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import type { Product } from '@/lib/menu'
 
 type ProductDialogProps = {
@@ -11,6 +11,9 @@ type ProductDialogProps = {
   fallbackImage: string
   fallbackImageAlt: string
   onClose: () => void
+  /** Passe au produit précédent / suivant de la catégorie. Absent si un seul produit. */
+  onPrev?: () => void
+  onNext?: () => void
 }
 
 export function ProductDialog({
@@ -18,12 +21,16 @@ export function ProductDialog({
   fallbackImage,
   fallbackImageAlt,
   onClose,
+  onPrev,
+  onNext,
 }: ProductDialogProps) {
-  // Ferme la fiche avec la touche Échap
+  // Ferme la fiche avec Échap, navigue avec les flèches du clavier
   useEffect(() => {
     if (!product) return
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') onPrev?.()
+      if (e.key === 'ArrowRight') onNext?.()
     }
     document.addEventListener('keydown', handleKeyDown)
     document.body.style.overflow = 'hidden'
@@ -31,7 +38,7 @@ export function ProductDialog({
       document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
     }
-  }, [product, onClose])
+  }, [product, onClose, onPrev, onNext])
 
   if (!product) return null
 
@@ -54,12 +61,14 @@ export function ProductDialog({
           type="button"
           onClick={onClose}
           aria-label="Fermer"
-          className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-cream/90 text-ink shadow-sm transition hover:bg-cream"
+          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-cream/90 text-ink shadow-sm transition hover:bg-cream"
         >
           <X className="h-5 w-5" />
         </button>
 
-        <div className="relative aspect-square w-full bg-cream sm:aspect-4/3">
+        {/* Fond cream + image entière visible (object-contain) : plus de recadrage,
+            quel que soit le format de la photo fournie (portrait, carré, paysage). */}
+        <div className="relative flex h-[42vh] w-full items-center justify-center bg-cream sm:h-[440px]">
           <Image
             src={image || '/placeholder.svg'}
             alt={imageAlt}
@@ -67,8 +76,30 @@ export function ProductDialog({
             sizes="(min-width: 640px) 700px, 100vw"
             quality={95}
             priority
-            className="object-cover"
+            className="object-contain"
           />
+
+          {onPrev ? (
+            <button
+              type="button"
+              onClick={onPrev}
+              aria-label="Produit précédent"
+              className="absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-cream/90 text-ink shadow-sm transition hover:bg-cream"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          ) : null}
+
+          {onNext ? (
+            <button
+              type="button"
+              onClick={onNext}
+              aria-label="Produit suivant"
+              className="absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-cream/90 text-ink shadow-sm transition hover:bg-cream"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          ) : null}
         </div>
 
         <div className="max-h-[45vh] overflow-y-auto px-6 py-6 sm:max-h-none sm:px-8 sm:py-8">

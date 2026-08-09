@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import type { Category, Product } from '@/lib/menu'
+import type { Category } from '@/lib/menu'
 import { ProductDialog } from '@/components/product-dialog'
 import { useInView } from '@/lib/use-in-view'
 
@@ -13,8 +13,15 @@ export function MenuSection({
   category: Category
   index: number
 }) {
-  const [selected, setSelected] = useState<Product | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const { ref, inView } = useInView<HTMLDivElement>()
+
+  const total = category.products.length
+  const selected = selectedIndex !== null ? category.products[selectedIndex] : null
+  const goToPrev = () =>
+    setSelectedIndex((i) => (i === null ? null : (i - 1 + total) % total))
+  const goToNext = () =>
+    setSelectedIndex((i) => (i === null ? null : (i + 1) % total))
 
   const isReversed = index % 2 === 1
   const sectionBg = index % 2 === 0 ? 'bg-paper' : 'bg-cream'
@@ -54,7 +61,7 @@ export function MenuSection({
           >
             <button
               type="button"
-              onClick={() => setSelected(product)}
+              onClick={() => setSelectedIndex(i)}
               className="flex w-full items-baseline justify-between gap-4 py-3.5 text-left transition hover:bg-ink/[0.03] hover:pl-1"
             >
               <div className="min-w-0">
@@ -114,7 +121,9 @@ export function MenuSection({
         product={selected}
         fallbackImage={category.image}
         fallbackImageAlt={category.imageAlt}
-        onClose={() => setSelected(null)}
+        onClose={() => setSelectedIndex(null)}
+        onPrev={total > 1 ? goToPrev : undefined}
+        onNext={total > 1 ? goToNext : undefined}
       />
     </section>
   )
