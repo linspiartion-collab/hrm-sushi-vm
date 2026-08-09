@@ -224,15 +224,28 @@
     transition-delay: 0.2s;
   }
 
-  /* Section hero : hauteur augmentée pour laisser de la place au scroll
-     qui pilote l'animation du logo et l'apparition du contenu (voir hero.tsx / GSAP) */
-  .hero-scroll-wrap {
-    height: 200vh;
+  /* États initiaux de l'animation d'entrée du hero, jouée une seule fois au
+     chargement de la page par GSAP (voir hero.tsx). Poser l'état caché en CSS
+     (plutôt que de laisser GSAP l'appliquer en JS après le premier paint)
+     évite un flash de contenu visible avant que l'animation ne démarre. */
+  .hero-bg-in {
+    opacity: 0;
   }
-
-  /* État initial du titre / texte / bouton, révélés progressivement par GSAP au scroll */
+  .hero-stripes-in {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  .hero-logo-in {
+    opacity: 0;
+    transform: scale(1.08) translateY(-24px);
+  }
   .hero-reveal-target {
     opacity: 0;
+    transform: translateY(28px);
+  }
+  .hero-cta-in {
+    opacity: 0;
+    transform: translateY(16px) scale(0.94);
   }
 
   /* Indicateur qui glisse derrière la pilule active dans la nav */
@@ -242,4 +255,3 @@
       width 0.4s cubic-bezier(0.16, 0.84, 0.44, 1);
   }
 }
-
