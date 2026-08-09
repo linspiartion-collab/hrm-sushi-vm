@@ -56,16 +56,10 @@ export function Hero() {
       className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-ink px-6 py-16 text-cream"
     >
       <div ref={bgRef} className="hero-bg-in pointer-events-none absolute inset-0">
-        {/* Image de fond sur mobile (économise batterie/données, plus fiable que la vidéo sur téléphone) */}
-        <Image
-          src={brand.heroImage || '/placeholder.svg'}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-25 md:hidden"
-        />
-        {/* Vidéo de fond sur desktop/tablette uniquement (remplaçable via lib/brand.ts) */}
+        {/* Vidéo de fond (desktop et mobile) — poster affiché tant que la vidéo
+            n'a pas assez chargé, et automatiquement si la lecture échoue.
+            playsInline+muted+autoPlay sont requis pour l'autoplay inline sur
+            iOS Safari / Chrome Android. */}
         <video
           autoPlay
           muted
@@ -73,7 +67,7 @@ export function Hero() {
           playsInline
           preload="auto"
           poster={brand.heroImage}
-          className="absolute inset-0 hidden h-full w-full object-cover opacity-25 md:block"
+          className="absolute inset-0 h-full w-full object-cover opacity-25"
         >
           <source src={brand.heroVideo} type="video/mp4" />
         </video>
