@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   description:
     'La carte complète de HRM Sushi : box et plateaux, sushis, california & maki, crunch, snacking, donburi et poké bowls, préparés chaque jour sur place par nos chefs sushimen.',
   generator: 'v0.app',
+  formatDetection: {
+    telephone: false,
+  },
   keywords: [
     'HRM Sushi',
     'corner sushi',

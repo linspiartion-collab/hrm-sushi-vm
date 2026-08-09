@@ -76,7 +76,7 @@ export function CategoryNav() {
                 <a
                   href={`#${category.id}`}
                   aria-current={isActive ? 'true' : undefined}
-                  className={`block whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors ${
+                  className={`block whitespace-nowrap rounded-full border px-4 py-3 text-xs font-semibold uppercase tracking-wider transition-colors ${
                     isActive
                       ? 'border-brand bg-brand text-cream'
                       : 'border-ink/15 bg-transparent text-ink hover:border-brand hover:text-brand'
