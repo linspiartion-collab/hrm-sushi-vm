@@ -41,7 +41,7 @@ export const categories: Category[] = [
     id: 'box-plateaux',
     label: 'À partager',
     title: 'Box & Plateaux',
-    image: '/images/cat-box-plateaux.png',
+    image: '/images/cat-box-plateaux.jpg',
     imageAlt: 'Grand plateau de sushis assortis à partager',
     video: '/videos/categories/box-plateaux.mp4',
     products: [
@@ -108,7 +108,7 @@ export const categories: Category[] = [
     id: 'sushis',
     label: 'Les classiques',
     title: 'Sushis',
-    image: '/images/cat-sushis.png',
+    image: '/images/cat-sushis.jpg',
     imageAlt: 'Sushis nigiri au saumon frais',
     video: '/videos/categories/sushis.mp4',
     products: [
