@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   title: 'HRM Sushi — Corner sushi dans votre magasin Auchan',
   description:
     'La carte complète de HRM Sushi : box et plateaux, sushis, california & maki, crunch, snacking, donburi et poké bowls, préparés chaque jour sur place par nos chefs sushimen.',
-  generator: 'v0.app',
   formatDetection: {
     telephone: false,
   },
@@ -42,10 +41,6 @@ export const metadata: Metadata = {
       {
         url: '/icon-dark-32x32.png',
         media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
       },
     ],
     apple: '/apple-icon.png',
