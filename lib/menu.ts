@@ -133,7 +133,7 @@ export const categories: Category[] = [
     id: 'california-maki',
     label: 'Les incontournables',
     title: 'California & Maki',
-    image: '/images/cat-california-maki.png',
+    image: '/images/cat-california-maki.jpg',
     imageAlt: 'California rolls et maki au saumon',
     video: '/videos/categories/california-maki.mp4',
     products: [
@@ -152,7 +152,7 @@ export const categories: Category[] = [
     id: 'crunch-cristal',
     label: 'Textures',
     title: 'Crunch & Cristal',
-    image: '/images/cat-crunch-cristal.png',
+    image: '/images/cat-crunch-cristal.jpg',
     imageAlt: 'Rolls crunch panés et rolls cristal translucides',
     video: '/videos/categories/crunch-cristal.mp4',
     products: [
@@ -224,7 +224,7 @@ export const categories: Category[] = [
     id: 'donburi',
     label: 'Chaud & réconfortant',
     title: 'Donburi & Plats chauds',
-    image: '/images/cat-donburi.png',
+    image: '/images/cat-donburi.jpg',
     imageAlt: 'Donburi de riz au poulet katsu et sauce spicy mayo',
     video: '/videos/categories/donburi.mp4',
     products: [
@@ -255,7 +255,7 @@ export const categories: Category[] = [
     id: 'poke-bowls',
     label: 'Frais & coloré',
     title: 'Poké Bowls',
-    image: '/images/cat-poke.png',
+    image: '/images/cat-poke.jpg',
     imageAlt: 'Poké bowl au saumon, mangue et avocat',
     video: '/videos/categories/poke-bowls.mp4',
     products: [
